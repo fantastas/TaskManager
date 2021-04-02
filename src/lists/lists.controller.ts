@@ -54,6 +54,14 @@ export class ListsController {
     return await this.listService.deleteTask(listId, id);
   }
 
+  @Get('/:listId/tasks/:id')
+  public async getSpecificTask(
+    @Param('listId') listId: Types.ObjectId,
+    @Param('id') id: Types.ObjectId,
+  ) {
+    return await this.listService.getSpecificTask(listId, id);
+  }
+
   @Delete('/:id')
   public async deleteList(@Res() res, @Param('id') listId: string) {
     return await this.listService.remove(res, listId);

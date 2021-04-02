@@ -1,12 +1,6 @@
 import { UpdateTaskDto } from './../dto/update-task.dto';
 import { Task, TaskDocument } from './../schemas/task.schema';
-import {
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-  Param,
-  Res,
-} from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException, Res } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateListDto } from '../dto/create-list.dto';
@@ -125,5 +119,9 @@ export class ListsService {
       { _listID: listId, _id: id },
       { useFindAndModify: false },
     );
+  }
+
+  async getSpecificTask(listid: Types.ObjectId, id: Types.ObjectId) {
+    return await this.taskModel.findOne({ _listID: listid, _id: id });
   }
 }
