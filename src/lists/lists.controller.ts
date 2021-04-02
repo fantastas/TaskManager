@@ -29,7 +29,7 @@ export class ListsController {
 
   @Post('/:listId/tasks')
   public async addTask(
-    @Param('id') listId: Types.ObjectId,
+    @Param('listId') listId: Types.ObjectId,
     @Body() createTaskDto: CreateTaskDto,
   ) {
     return await this.listService.createTask(listId, createTaskDto);

@@ -94,11 +94,12 @@ export class ListsService {
   }
 
   async createTask(
-    @Param() listId: Types.ObjectId,
+    listId: Types.ObjectId,
     createTaskDto: CreateTaskDto,
   ): Promise<Task> {
     const createdTask = new this.taskModel(createTaskDto);
     createdTask._listID = listId;
+    console.log(createdTask._listID);
     createdTask.save();
     return await createdTask;
   }

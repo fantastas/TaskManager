@@ -9,7 +9,11 @@ export class Task {
   @Prop({ required: true })
   title: string;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: List.name }] })
+  @Prop({
+    type: [
+      { type: mongoose.Schema.Types.ObjectId, ref: List.name, required: true },
+    ],
+  })
   _listID: Types.ObjectId;
 }
 
