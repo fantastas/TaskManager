@@ -31,8 +31,8 @@ export class TasksService {
     return await this.taskModel.find().exec();
   }
 
-  async deleteOld(id: Types.ObjectId) {
-    const deletedTask = await this.taskModel.findByIdAndRemove(id);
-    return await deletedTask;
-  }
+  // async deleteOld(id: Types.ObjectId) {
+  //   const deletedTask = await this.taskModel.findByIdAndRemove(id);
+  //   return await deletedTask;
+  // }
 }

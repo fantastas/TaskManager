@@ -13,8 +13,8 @@ export class TasksController {
     return await this.taskService.findAll();
   }
 
-  @Delete('/:id')
-  public async deleteOld(@Param('id') id: Types.ObjectId) {
-    return await this.taskService.deleteOld(id);
-  }
+  // @Delete('/:id')
+  // public async deleteOld(@Param('id') id: Types.ObjectId) {
+  //   return await this.taskService.deleteOld(id);
+  // }
 }
