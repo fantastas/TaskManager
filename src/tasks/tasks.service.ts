@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable, Res } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Task, TaskDocument } from '../schemas/task.schema';
 import { CreateTaskDto } from 'src/dto/create-task.dto';
 
@@ -30,5 +30,10 @@ export class TasksService {
 
   async findAll() {
     return await this.taskModel.find().exec();
+  }
+
+  async deleteOld(id: Types.ObjectId) {
+    const deletedTask = await this.taskModel.findByIdAndRemove(id);
+    return await deletedTask;
   }
 }

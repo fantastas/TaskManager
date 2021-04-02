@@ -1,9 +1,12 @@
+import { TasksService } from './../tasks/tasks.service';
+import { UpdateTaskDto } from './../dto/update-task.dto';
 import {
   Body,
   Controller,
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Res,
 } from '@nestjs/common';
@@ -33,6 +36,23 @@ export class ListsController {
     @Body() createTaskDto: CreateTaskDto,
   ) {
     return await this.listService.createTask(listId, createTaskDto);
+  }
+
+  @Patch('/:listId/tasks/:id')
+  public async editTask(
+    @Param('listId') listId: Types.ObjectId,
+    @Param('id') id: Types.ObjectId,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ) {
+    return await this.listService.updateTask(listId, id, updateTaskDto);
+  }
+
+  @Delete('/:listId/tasks/:id')
+  public async deleteTask(
+    @Param('listId') listId: Types.ObjectId,
+    @Param('id') id: Types.ObjectId,
+  ) {
+    return await this.listService.deleteTask(listId, id);
   }
 
   @Delete('/:id')

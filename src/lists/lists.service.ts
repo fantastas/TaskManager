@@ -1,3 +1,4 @@
+import { UpdateTaskDto } from './../dto/update-task.dto';
 import { Task, TaskDocument } from './../schemas/task.schema';
 import {
   HttpStatus,
@@ -102,5 +103,27 @@ export class ListsService {
     console.log(createdTask._listID);
     createdTask.save();
     return await createdTask;
+  }
+
+  async updateTask(
+    listId: Types.ObjectId,
+    id: Types.ObjectId,
+    updateTaskDto: UpdateTaskDto,
+  ): Promise<Task> {
+    const updatedTask = this.taskModel.findOneAndUpdate(
+      {
+        _listID: listId,
+        _id: id,
+      },
+      updateTaskDto,
+    );
+    return await updatedTask;
+  }
+
+  async deleteTask(listId: Types.ObjectId, id: Types.ObjectId) {
+    return await this.taskModel.findOneAndDelete(
+      { _listID: listId, _id: id },
+      { useFindAndModify: false },
+    );
   }
 }
