@@ -124,4 +124,9 @@ export class ListsService {
   async getSpecificTask(listid: Types.ObjectId, id: Types.ObjectId) {
     return await this.taskModel.findOne({ _listID: listid, _id: id });
   }
+
+  async findTasks(listid: Types.ObjectId) {
+    console.log('kviecia');
+    return await this.taskModel.find({ _listID: listid });
+  }
 }

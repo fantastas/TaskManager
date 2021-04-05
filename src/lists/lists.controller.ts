@@ -14,6 +14,7 @@ import { ListsService } from './lists.service';
 import { CreateListDto } from '../dto/create-list.dto';
 import { CreateTaskDto } from 'src/dto/create-task.dto';
 import { Types } from 'mongoose';
+import { Task } from 'src/schemas/task.schema';
 
 @Controller('lists')
 export class ListsController {
@@ -22,6 +23,13 @@ export class ListsController {
   @Get()
   public async getLists(): Promise<List[]> {
     return await this.listService.findAll();
+  }
+
+  @Get('/:listId/tasks')
+  public async findAll(
+    @Param('listId') listId: Types.ObjectId,
+  ): Promise<Task[]> {
+    return await this.listService.findTasks(listId);
   }
 
   @Post()

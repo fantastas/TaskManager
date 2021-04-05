@@ -8,10 +8,10 @@ import { TasksService } from './tasks.service';
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly taskService: TasksService) {}
-  @Get()
-  public async findAll(): Promise<Task[]> {
-    return await this.taskService.findAll();
-  }
+  // @Get()
+  // public async findAll(): Promise<Task[]> {
+  //   return await this.taskService.findAll();
+  // }
 
   // @Delete('/:id')
   // public async deleteOld(@Param('id') id: Types.ObjectId) {
