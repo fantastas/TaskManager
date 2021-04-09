@@ -26,20 +26,19 @@ export class ListsController {
   }
 
   @Get('/:listId/tasks')
-  public async findAll(
-    @Param('listId') listId: Types.ObjectId,
-  ): Promise<Task[]> {
+  public async findAll(@Param('listId') listId: string): Promise<Task[]> {
     return await this.listService.findTasks(listId);
   }
 
   @Post()
   public async addList(@Res() res, @Body() createListDto: CreateListDto) {
-    return await this.listService.create(res, createListDto);
+    const newList = await this.listService.create(res, createListDto);
+    res.status(200).json(newList);
   }
 
   @Post('/:listId/tasks')
   public async addTask(
-    @Param('listId') listId: Types.ObjectId,
+    @Param('listId') listId: string,
     @Body() createTaskDto: CreateTaskDto,
   ) {
     return await this.listService.createTask(listId, createTaskDto);
@@ -47,8 +46,8 @@ export class ListsController {
 
   @Patch('/:listId/tasks/:id')
   public async editTask(
-    @Param('listId') listId: Types.ObjectId,
-    @Param('id') id: Types.ObjectId,
+    @Param('listId') listId: string,
+    @Param('id') id: string,
     @Body() updateTaskDto: UpdateTaskDto,
   ) {
     return await this.listService.updateTask(listId, id, updateTaskDto);
@@ -56,16 +55,21 @@ export class ListsController {
 
   @Delete('/:listId/tasks/:id')
   public async deleteTask(
-    @Param('listId') listId: Types.ObjectId,
-    @Param('id') id: Types.ObjectId,
+    @Param('listId') listId: string,
+    @Param('id') id: string,
   ) {
     return await this.listService.deleteTask(listId, id);
   }
 
+  @Delete()
+  public async deleteAll() {
+    return await this.listService.deleteAll();
+  }
+
   @Get('/:listId/tasks/:id')
   public async getSpecificTask(
-    @Param('listId') listId: Types.ObjectId,
-    @Param('id') id: Types.ObjectId,
+    @Param('listId') listId: string,
+    @Param('id') id: string,
   ) {
     return await this.listService.getSpecificTask(listId, id);
   }

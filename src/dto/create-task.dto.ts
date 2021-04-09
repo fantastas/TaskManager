@@ -6,5 +6,5 @@ export class CreateTaskDto {
   @Prop({ required: true })
   title: string;
   @Prop({ required: true })
-  _listId: Types.ObjectId;
+  _listId: string;
 }

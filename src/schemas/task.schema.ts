@@ -10,11 +10,12 @@ export class Task {
   title: string;
 
   @Prop({
-    type: [
-      { type: mongoose.Schema.Types.ObjectId, ref: List.name, required: true },
-    ],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: List.name }],
   })
-  _listID: Types.ObjectId;
+  _listID: string;
+
+  @Prop({ default: false })
+  completed: boolean;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

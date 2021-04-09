@@ -19,20 +19,11 @@ export class ListsService {
   ) {}
 
   async create(@Res() res, createListDto: CreateListDto): Promise<List> {
-    const createdList = new this.listModel(createListDto);
-    const isCreated = this.listModel.findOne({ name: createdList.title });
-    if (isCreated) {
-      createdList.save();
-      return res.status(HttpStatus.OK).json({
-        message: 'List has been created successfully',
-        createdList,
-      });
-    } else {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'Error: List was not created!',
-        status: 400,
-      });
-    }
+    return await this.listModel.findOneAndUpdate(
+      { title: createListDto.title },
+      { title: createListDto.title },
+      { new: true, upsert: true },
+    );
   }
 
   async findAll(): Promise<List[]> {
@@ -75,6 +66,10 @@ export class ListsService {
     }
   }
 
+  async deleteAll() {
+    return await this.listModel.deleteMany();
+  }
+
   async remove(@Res() res, listId: string): Promise<any> {
     if (!listId) {
       throw new NotFoundException('ListID does not exist');
@@ -89,7 +84,7 @@ export class ListsService {
   }
 
   async createTask(
-    listId: Types.ObjectId,
+    listId: string,
     createTaskDto: CreateTaskDto,
   ): Promise<Task> {
     const createdTask = new this.taskModel(createTaskDto);
@@ -100,8 +95,8 @@ export class ListsService {
   }
 
   async updateTask(
-    listId: Types.ObjectId,
-    id: Types.ObjectId,
+    listId: string,
+    id: string,
     updateTaskDto: UpdateTaskDto,
   ): Promise<Task> {
     const updatedTask = this.taskModel.findOneAndUpdate(
@@ -114,18 +109,18 @@ export class ListsService {
     return await updatedTask;
   }
 
-  async deleteTask(listId: Types.ObjectId, id: Types.ObjectId) {
+  async deleteTask(listId: string, id: string) {
     return await this.taskModel.findOneAndDelete(
       { _listID: listId, _id: id },
       { useFindAndModify: false },
     );
   }
 
-  async getSpecificTask(listid: Types.ObjectId, id: Types.ObjectId) {
+  async getSpecificTask(listid: string, id: string) {
     return await this.taskModel.findOne({ _listID: listid, _id: id });
   }
 
-  async findTasks(listid: Types.ObjectId) {
+  async findTasks(listid: string) {
     console.log('kviecia');
     return await this.taskModel.find({ _listID: listid });
   }
