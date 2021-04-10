@@ -26,6 +26,17 @@ export class ListsService {
     );
   }
 
+  async updateTask(listId: string, id: string): Promise<Task> {
+    const updatedTask = this.taskModel.findOneAndUpdate(
+      {
+        _listId: listId,
+        _id: id,
+      },
+      { completed: true },
+    );
+    return await updatedTask;
+  }
+
   async findAll(): Promise<List[]> {
     return this.listModel.find().exec();
   }
@@ -92,21 +103,6 @@ export class ListsService {
     console.log(createdTask._listID);
     createdTask.save();
     return await createdTask;
-  }
-
-  async updateTask(
-    listId: string,
-    id: string,
-    updateTaskDto: UpdateTaskDto,
-  ): Promise<Task> {
-    const updatedTask = this.taskModel.findOneAndUpdate(
-      {
-        _listID: listId,
-        _id: id,
-      },
-      updateTaskDto,
-    );
-    return await updatedTask;
   }
 
   async deleteTask(listId: string, id: string) {

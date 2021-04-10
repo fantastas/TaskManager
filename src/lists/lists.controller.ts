@@ -48,9 +48,10 @@ export class ListsController {
   public async editTask(
     @Param('listId') listId: string,
     @Param('id') id: string,
-    @Body() updateTaskDto: UpdateTaskDto,
+    @Res() res,
   ) {
-    return await this.listService.updateTask(listId, id, updateTaskDto);
+    const updatedTask = await this.listService.updateTask(listId, id);
+    res.status(200).json(updatedTask);
   }
 
   @Delete('/:listId/tasks/:id')
