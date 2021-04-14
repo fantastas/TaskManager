@@ -13,7 +13,6 @@ import { List } from '../schemas/list.schema';
 import { ListsService } from './lists.service';
 import { CreateListDto } from '../dto/create-list.dto';
 import { CreateTaskDto } from 'src/dto/create-task.dto';
-import { Types } from 'mongoose';
 import { Task } from 'src/schemas/task.schema';
 
 @Controller('lists')
@@ -48,9 +47,14 @@ export class ListsController {
   public async editTask(
     @Param('listId') listId: string,
     @Param('id') id: string,
+    @Body() updateTaskDto: UpdateTaskDto,
     @Res() res,
   ) {
-    const updatedTask = await this.listService.updateTask(listId, id);
+    const updatedTask = await this.listService.updateTask(
+      listId,
+      id,
+      updateTaskDto,
+    );
     res.status(200).json(updatedTask);
   }
 

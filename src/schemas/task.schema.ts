@@ -1,6 +1,6 @@
 import { List } from './list.schema';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 
 export type TaskDocument = Task & Document;
@@ -10,7 +10,7 @@ export class Task {
   title: string;
 
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: List.name }],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: Task.name }],
   })
   _listID: string;
 

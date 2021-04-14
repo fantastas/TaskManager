@@ -26,15 +26,19 @@ export class ListsService {
     );
   }
 
-  async updateTask(listId: string, id: string): Promise<Task> {
-    const updatedTask = this.taskModel.findOneAndUpdate(
+  async updateTask(
+    listId: string,
+    id: string,
+    updateTaskDto: UpdateTaskDto,
+  ): Promise<Task> {
+    const updatedTask = await this.taskModel.findOneAndUpdate(
       {
-        _listId: listId,
+        _listID: listId,
         _id: id,
       },
-      { completed: true },
+      updateTaskDto,
     );
-    return await updatedTask;
+    return updatedTask;
   }
 
   async findAll(): Promise<List[]> {
