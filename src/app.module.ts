@@ -12,7 +12,6 @@ import { UsersModule } from './users/users.module';
     MongooseModule.forRoot('mongodb://localhost:27017/TaskManager'),
     ListModule,
     TaskModule,
-    AuthModule,
     UsersModule,
   ],
   controllers: [AppController], // handle http requests
